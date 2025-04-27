@@ -33,7 +33,7 @@ export class Database {
   }
   
   insert(table, data) {
-    
+
     if (Array.isArray(this.#database[table])) {
       this.#database[table].push(data)
     } else {
@@ -55,9 +55,11 @@ export class Database {
 
   update(table, id, data) {
     const rowIndex = this.#database[table]?.findIndex(row => row.id === id)
-
+    
     if (rowIndex > -1) {
-      this.#database[table][rowIndex] = {id, ...data}
+      const taskOld = this.#database[table][rowIndex]
+      
+      this.#database[table][rowIndex] = {id, ...taskOld, ...data}
       this.#persist()
     }
   }
@@ -66,8 +68,7 @@ export class Database {
     const rowIndex = this.#database[table]?.findIndex(row => row.id === id)
 
     if (rowIndex > -1) {
-      this.#database[table][rowIndex].completed = !this.#database[table][rowIndex].completed
-      
+      this.#database[table][rowIndex] = {id, ...this.#database[table][rowIndex], completed_at: new Date(), updated_at: new Date()}
       this.#persist()
     }
   }

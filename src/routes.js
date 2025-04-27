@@ -17,8 +17,7 @@ export const routes = [
         description,
         created_at: new Date(),
         updated_at: new Date(),
-        completed: completed ?? false,
-        completed_at: completed ? new Date() : null,
+        completed_at: null,
       })
       
       return res.writeHead(201).end()
@@ -31,8 +30,8 @@ export const routes = [
       const { search } = req.query
       
       const tasks = database.select('tasks', search ? {
-        name: search,
-        completed: search,
+        title: search,
+        description: search,
       } : null)
     
       return res.end(JSON.stringify(tasks))
@@ -43,22 +42,20 @@ export const routes = [
     path: buildRoutePath('/task/:id'),
     handler: (req, res) => {
       const { id } = req.params;
-      const { title, description, completed } = req.body
+      const { title, description } = req.body
       
       const tasks = database.update('tasks', id, {
         title,
         description,
         updated_at: new Date(),
-        completed: completed ?? false,
-        completed_at: completed ? new Date() : null,
       })
-    
+  
       return res.end(JSON.stringify(tasks))
     }
   },
   {
     method: 'PATCH',
-    path: buildRoutePath('/task/:id'),
+    path: buildRoutePath('/task/:id/complete'),
     handler: (req, res) => {
       const { id } = req.params;
       
