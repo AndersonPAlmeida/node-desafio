@@ -33,5 +33,31 @@ export const routes = [
     
       return res.end(JSON.stringify(users))
     }
-  }
+  },
+  {
+    method: 'PUT',
+    path: buildRoutePath('/task/:id'),
+    handler: (req, res) => {
+      const { id } = req.params;
+      const { name, completed } = req.body
+      
+      const users = database.update('tasks', id, {
+        name,
+        completed,
+      })
+    
+      return res.end(JSON.stringify(users))
+    }
+  },
+  {
+    method: 'PATCH',
+    path: buildRoutePath('/task/:id'),
+    handler: (req, res) => {
+      const { id } = req.params;
+      
+      const users = database.updateTaskCompleted('tasks', id)
+    
+      return res.end(JSON.stringify(users))
+    }
+  },
 ]
