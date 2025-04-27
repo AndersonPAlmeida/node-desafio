@@ -26,12 +26,12 @@ export const routes = [
     handler: (req, res) => {
       const { search } = req.query
       
-      const users = database.select('tasks', search ? {
+      const tasks = database.select('tasks', search ? {
         name: search,
         completed: search,
       } : null)
     
-      return res.end(JSON.stringify(users))
+      return res.end(JSON.stringify(tasks))
     }
   },
   {
@@ -41,12 +41,12 @@ export const routes = [
       const { id } = req.params;
       const { name, completed } = req.body
       
-      const users = database.update('tasks', id, {
+      const tasks = database.update('tasks', id, {
         name,
         completed,
       })
     
-      return res.end(JSON.stringify(users))
+      return res.end(JSON.stringify(tasks))
     }
   },
   {
@@ -55,9 +55,20 @@ export const routes = [
     handler: (req, res) => {
       const { id } = req.params;
       
-      const users = database.updateTaskCompleted('tasks', id)
+      const tasks = database.updateTaskCompleted('tasks', id)
     
-      return res.end(JSON.stringify(users))
+      return res.end(JSON.stringify(tasks))
+    }
+  },
+  {
+    method: 'DELETE',
+    path: buildRoutePath('/task/:id'),
+    handler: (req, res) => {
+      const { id } = req.params;
+      
+      const tasks = database.delete('tasks', id)
+    
+      return res.end(JSON.stringify(tasks))
     }
   },
 ]
