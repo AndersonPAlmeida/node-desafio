@@ -1,0 +1,13 @@
+{
+  "name": "quest-task",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": ["node", "api"],
+  "author": "Anderson",
+  "license": "ISC",
+  "description": "Desafio do modulo 01 de Node JS da Rocketseat"
+}
